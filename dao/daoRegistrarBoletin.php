@@ -5,6 +5,7 @@ require_once '../dto/user_user.php';
 require_once '../dto/listUser.php';
 require_once '../dto/user_user_attribute.php';
 require_once '../dto/user_blacklist.php';
+require_once '../dto/user_blacklist_data.php';
 
 class DAORegistrarBoletin {
 
@@ -96,7 +97,6 @@ class DAORegistrarBoletin {
 
 		$conexion = null;
 
-		echo "<br/><br/>serch ... terminamos con el metodo de: insertarUserUser()<br/><br/>";
 		return $userUser;
 	}
 
@@ -108,9 +108,6 @@ class DAORegistrarBoletin {
 		$modified = $listUser->modified;
 
 		$conexion = new Conexion();
-		echo "<br/><br/>";
-		var_dump( $listUser );
-		echo "<br/><br/>";
 
 		$consulta = $conexion->prepare('INSERT INTO ' . $listUser::TABLA .' ( userid, listid, entered, modified ) VALUES( :userid, :listid, :entered, :modified )');
 
@@ -132,7 +129,34 @@ class DAORegistrarBoletin {
 
 		$conexion = null;
 
-		echo "serch ... terminamos con el metodo de: insertarListUser()<br/><br/>";
+		return $listUser;
+	}
+
+	public static function actualizarListUser( ListUser $listUser ){
+		$userid = $listUser->userid;
+		$listid = $listUser->listid;
+		$modified = $listUser->modified;
+
+		$conexion = new Conexion();
+
+		$consulta = $conexion->prepare('UPDATE ' . $listUser::TABLA .' SET modified = :modified WHERE userid = :userid AND listid = :listid');
+
+		try{
+
+			//$conexion->beginTransaction();
+
+			$consulta->bindParam( ':userid', $userid );
+			$consulta->bindParam( ':listid', $listid );
+			$consulta->bindParam( ':modified', $modified );
+
+			$consulta->execute();
+
+		} catch( PDOExecption $e ){
+        	echo "=======  Error!: " . $e->getMessage() . "<br/>"; 
+		}
+
+		$conexion = null;
+
 		return $listUser;
 	}
 
@@ -163,7 +187,6 @@ class DAORegistrarBoletin {
 
 		$conexion = null;
 
-		echo "serch ... terminamos con el metodo de: insertarUserUserAttribute()<br/><br/>";
 		return $userUserAttribute;
 	}
 
@@ -195,11 +218,61 @@ class DAORegistrarBoletin {
 
 		$conexion = null;
 
-		echo "<br/><br/>serch ... terminamos con el metodo de: insertarUserUser()<br/><br/>";
 		return $userUser;
 	}
 
+	public static function quitarUserBlackList( UserBlackList $userBlackList ){
+		$respuesta = false;
+		/*
+		* Valores tomados por referencia del Objeto userBlackList para ser tomados por la clase PDO
+		 */
+		$email = $userBlackList->email;
+
+		$conexion = new Conexion();
+
+		$consulta = $conexion->prepare('DELETE FROM ' . $userBlackList::TABLA . ' WHERE email = :email');
+
+		try{
+			$consulta->bindParam( ':email', $email );
+
+			$consulta->execute();
+			$respuesta = true;
+		} catch( PDOExecption $e ){
+        	echo "=======  Error!: " . $e->getMessage() . "<br/>";
+			$respuesta = false;
+		}
+
+
+		$conexion = null;
+
+		return $respuesta;
+	}
+
+	public static function quitarUserBlackListData( UserBlackListData $userBlackListData ){
+		$respuesta = false;
+		/*
+		* Valores tomados por referencia del Objeto userBlackListData para ser tomados por la clase PDO
+		 */
+		$email = $userBlackListData->email;
+
+		$conexion = new Conexion();
+
+		$consulta = $conexion->prepare('DELETE FROM ' . $userBlackListData::TABLA . ' WHERE email = :email');
+
+		try{
+			$consulta->bindParam( ':email', $email );
+
+			$consulta->execute();
+			$respuesta = true;
+		} catch( PDOExecption $e ){
+        	echo "=======  Error!: " . $e->getMessage() . "<br/>";
+			$respuesta = false;
+		}
+
+
+		$conexion = null;
+
+		return $respuesta;
+	}
+
 }
-
-
-

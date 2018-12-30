@@ -9,8 +9,8 @@ $tipoRegistro = 'boletin';
 $vUser->nombre = 'Sergio Asurin Calera';
 $vUser->email = 'fulanito2.calera@gmail.com';
 
-echo "Solo es una prueba para git"; 
-echo "Vamos a probar buscando a {$vUser->email}<br>";
+
+echo "Vamos a probar buscando a {$vUser->nombre} - {$vUser->email}<br>";
 
 if( $tipoRegistro === 'boletin' ){
 	echo "algo se debe de hacer por ser un boletin<br>";
@@ -25,6 +25,7 @@ function registrarBoletin( UserUser $user ){
 
 	/* Se dejara la opcion 3 como id por defecto de la lista de Boletin */
 	$idBoletin = 3;
+
 	$user = DAORegistrarBoletin::buscarRegistro( $user, $idBoletin );
 
 	if( $user->uuid == null ){
@@ -62,7 +63,8 @@ function registrarBoletin( UserUser $user ){
 		$userUserAttribute = DAORegistrarBoletin::insertarUserUserAttribute( $userUserAttribute );
 
 	} elseif( $user->uuid != null && $user->blacklisted == 1 ){
-		echo "serch ... tenemos a un usuario registrado y dado de baja<br>";
+		echo "<h4 style='color : orange;'>serch ... tenemos a un usuario registrado y dado de baja</h4>";
+
 		/*
 		-- Para volver a dar de alta debemos de cambiar los valores de user_user
 		-- confirmed = 1
@@ -77,6 +79,7 @@ function registrarBoletin( UserUser $user ){
 		user_blacklist_data
 		Se debe de eliminar el correo name y data
 		 */
+		
 		$user->confirmed = 1;
 		$user->blacklisted = 0;
 		$user->modified = BORegistrarBoletin::obtenerFechaUnix();
@@ -88,12 +91,19 @@ function registrarBoletin( UserUser $user ){
 		$listUser->entered = BORegistrarBoletin::obtenerFechaUnix();
 		$listUser->modified = BORegistrarBoletin::obtenerFechaUnix();
 
-		$listUser = DAORegistrarBoletin::insertarListUser( $listUser );
+		$listUser = DAORegistrarBoletin::actualizarListUser( $listUser );
 
-		
-		var_dump( $listUser );
+		$userBlackList = new UserBlackList();
+		$userBlackList->email = $user->email;
+
+		if( DAORegistrarBoletin::quitarUserBlackList( $userBlackList ) ){
+			$userBlackListData = new UserBlackListData();
+			$userBlackListData->email = $userBlackList->email;
+			DAORegistrarBoletin::quitarUserBlackListData( $userBlackListData );
+		}
+
 	}else{
-		echo "serch ... tenemos a un usuario registrado y activo<br>";
+		echo "<h4 style='color : green;'>serch ... tenemos a un usuario registrado y activo</h4>";
 		var_dump($user);
 	}
 

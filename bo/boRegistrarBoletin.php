@@ -18,6 +18,7 @@ class BORegistrarBoletin{
 	}
 
 	public static function obtenerFechaUnix(){
+		date_default_timezone_set('America/Mexico_City');
 		$fechaNuevaUnix = mktime();    
     	return date('Y-m-d H:i:s', $fechaNuevaUnix);
 	}

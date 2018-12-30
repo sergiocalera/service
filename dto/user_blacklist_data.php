@@ -1,9 +1,9 @@
 <?php
 	class UserBlackListData{
 
-		private $email
-		private $name
-		private $data
+		private $email;
+		private $name;
+		private $data;
 
 		const TABLA = 'phplist_user_blacklist_data';
 
