@@ -74,35 +74,39 @@ class DAOSuspenderBoletin {
 
 		$conexion = null;
 
-		echo "<br/><br/>serch ... terminamos con el metodo de: insertarUserUser()<br/><br/>";
 		return $userUser;
 	}
 
-	public static function borrarListUser( ListUser $listUser ){
-		/*
-			Valores por referencia del objeto ListUser para ser tomados por la clase PDO
-		 */
-		$userid = $listUser->$userid;
-		$listid = $listUser->$listid;
-		
+	public static function actualizarListUser( ListUser $listUser ){
+		$userid = $listUser->userid;
+		$listid = $listUser->listid;
+		$modified = $listUser->modified;
+
 		$conexion = new Conexion();
-		$consulta = $conexion->prepare('DELETE FROM ' . $listUser::TABLA . ' WHERE userid = :userid AND listid = :listid ');
+
+		$consulta = $conexion->prepare('UPDATE ' . $listUser::TABLA .' SET modified = :modified WHERE userid = :userid AND listid = :listid');
 
 		try{
+
 			$consulta->bindParam( ':userid', $userid );
 			$consulta->bindParam( ':listid', $listid );
+			$consulta->bindParam( ':modified', $modified );
 
 			$consulta->execute();
 
 		} catch( PDOExecption $e ){
-			echo "=======  Error!: " . $e->getMessage() . "<br/>";
+        	echo "=======  Error!: " . $e->getMessage() . "<br/>"; 
 		}
+
+		$conexion = null;
+
+		return $listUser;
 	}
 
 	public static function agregarUserABlackList( UserBlackList $userBlackList ){
 
-		$email = $userBlackList -> $email;
-		$added = $userBlackList -> $added;
+		$email = $userBlackList->email;
+		$added = $userBlackList->added;
 
 		$conexion = new Conexion();
 		$consulta = $conexion->prepare('INSERT INTO ' . $userBlackList::TABLA . ' ( email, added ) VALUES ( :email, :added )');
@@ -120,9 +124,9 @@ class DAOSuspenderBoletin {
 
 	public static function agregarUserABlackListData( UserBlackListData $userBlackListData ){
 
-		$email = $userBlackListData -> $email;
-		$name = $userBlackListData -> $name;
-		$data = $userBlackListData -> $data;
+		$email = $userBlackListData->email;
+		$name = $userBlackListData->name;
+		$data = $userBlackListData->data;
 
 		$conexion = new Conexion();
 		$consulta = $conexion->prepare('INSERT INTO ' . $userBlackListData::TABLA . ' ( email, name, data ) VALUES ( :email, :name, :data )');
@@ -139,6 +143,3 @@ class DAOSuspenderBoletin {
 		}
 	}
 }
-
-INSERT INTO mediateca.sub_seccion (ID_SECCION, ORDEN, TITULO) VALUES (1, 1, 'PRIMER GRADO');
-

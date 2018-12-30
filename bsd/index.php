@@ -14,7 +14,8 @@ echo "Vamos a probar buscando a {$vUser->nombre} - {$vUser->email}<br>";
 
 if( $tipoRegistro === 'boletin' ){
 	echo "algo se debe de hacer por ser un boletin<br>";
-	$vUser = registrarBoletin( $vUser );
+	//$vUser = registrarBoletin( $vUser );
+	$vUser = eliminarBoletin( $vUser );
 	//echo "obtenemos al objeto de user con info del registro: <br>";
 	//var_dump( $vUser );
 
@@ -78,6 +79,7 @@ function registrarBoletin( UserUser $user ){
 
 		user_blacklist_data
 		Se debe de eliminar el correo name y data
+
 		 */
 		
 		$user->confirmed = 1;
@@ -88,7 +90,6 @@ function registrarBoletin( UserUser $user ){
 		$listUser = new ListUser();
 		$listUser->userid = $user->id;
 		$listUser->listid = $idBoletin;
-		$listUser->entered = BORegistrarBoletin::obtenerFechaUnix();
 		$listUser->modified = BORegistrarBoletin::obtenerFechaUnix();
 
 		$listUser = DAORegistrarBoletin::actualizarListUser( $listUser );
@@ -132,7 +133,7 @@ function eliminarBoletin( UserUser $user ){
 	/* Se dejara la opcion 3 como id por defecto de la lista de Boletin */
 	$idBoletin = 3;
 	$user = DAOSuspenderBoletin::buscarRegistro( $user, $idBoletin );
-	if( $user->uuid != null && $user->blacklisted == 1 ){
+	if( $user->uuid != null ){
 		$user->confirmed = 0;
 		$user->blacklisted = 1;
 		$user->modified = BORegistrarBoletin::obtenerFechaUnix();
@@ -141,7 +142,7 @@ function eliminarBoletin( UserUser $user ){
 		$listUser = new ListUser();
 		$listUser->userid = $user->id;
 		$listUser->listid = $idBoletin;
-		$listUser = DAOSuspenderBoletin::borrarListUser( $listUser );
+		$listUser = DAOSuspenderBoletin::actualizarListUser( $listUser );
 
 		$userBlackList = new UserBlackList();
 		$userBlackList->email = $user->email;
@@ -149,9 +150,9 @@ function eliminarBoletin( UserUser $user ){
 		$userBlackList = DAOSuspenderBoletin::agregarUserABlackList( $userBlackList );
 		
 		$userBlackListData = new UserBlackListData();
-		$userBlackListData->$email = $user->email;
-		$userBlackListData->$name = 'reason';
-		$userBlackListData->$data = 'Puesto en lista negra por solicitud web enviado por el usuario';
+		$userBlackListData->email = $user->email;
+		$userBlackListData->name = 'reason';
+		$userBlackListData->data = 'Puesto en lista negra por solicitud web enviado por el usuario';
 		$userBlackListData = DAOSuspenderBoletin::agregarUserABlackListData( $userBlackListData );
 	}
 }
