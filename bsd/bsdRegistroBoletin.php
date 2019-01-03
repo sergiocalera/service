@@ -3,23 +3,23 @@
 require_once '../bo/boRegistrarBoletin.php';
 require_once '../dao/daoRegistrarBoletin.php';
 
-$vUser = new UserUser();
-$tipoRegistro = 'boletin';
-//$vUser->email = 'sergio.calera@gmail.com';
-$vUser->nombre = 'Sergio Asurin Calera';
-$vUser->email = 'fulanito2.calera@gmail.com';
+// $vUser = new UserUser();
+// $tipoRegistro = 'boletin';
+// //$vUser->email = 'sergio.calera@gmail.com';
+// $vUser->nombre = 'Sergio Asurin Calera';
+// $vUser->email = 'fulanito2.calera@gmail.com';
 
 
-echo "Vamos a probar buscando a {$vUser->nombre} - {$vUser->email}<br>";
+// echo "Vamos a probar buscando a {$vUser->nombre} - {$vUser->email}<br>";
 
-if( $tipoRegistro === 'boletin' ){
-	echo "algo se debe de hacer por ser un boletin<br>";
-	//$vUser = registrarBoletin( $vUser );
-	$vUser = eliminarBoletin( $vUser );
-	//echo "obtenemos al objeto de user con info del registro: <br>";
-	//var_dump( $vUser );
+// if( $tipoRegistro === 'boletin' ){
+// 	echo "algo se debe de hacer por ser un boletin<br>";
+// 	//$vUser = registrarBoletin( $vUser );
+// 	$vUser = eliminarBoletin( $vUser );
+// 	//echo "obtenemos al objeto de user con info del registro: <br>";
+// 	//var_dump( $vUser );
 
-}
+// }
 
 
 function registrarBoletin( UserUser $user ){

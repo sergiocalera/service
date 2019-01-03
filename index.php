@@ -1,5 +1,6 @@
 <?php 
-include_once "funciones.php";
+//include_once "funciones.php";
+include_once "bsd/bsdRegistroBoletin.php";
 
 
 header("Access-Control-Allow-Origin: *");
@@ -11,6 +12,15 @@ $respuesta = array();
 if( isset( $_POST['email'] ) && isset( $_POST['name'] ) && isset( $_POST['portal'] ) && $_POST['name'] != '' && $_POST['email'] != '' && $_POST['portal'] != '' ){
 
 	//$respuesta = array( 'state' => array( 'type' => 'success' ) );
+	$userUser = new UserUser();
+	$userUser->nombre = $_POST['name'];
+	$userUser->email = $_POST['email'];
+	if( $_POST['portal'] == 'registrar' ){
+		registrarBoletin( $userUser );
+	} else if( $_POST['portal'] == 'baja' ){
+		eliminarBoletin( $userUser );
+	}
+
 	$respuesta = obtenerDatos( $_POST['name'], $_POST['email'], $_POST['portal'] );
 }
 elseif ( !isset( $_POST['email'] ) || $_POST['email'] == '' ) {

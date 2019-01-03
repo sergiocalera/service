@@ -68,7 +68,7 @@ class DAOSuspenderBoletin {
 			$consulta->execute();
 			
 		} catch( PDOExecption $e ){
-        	echo "=======  Error!: " . $e->getMessage() . "<br/>";
+        	error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
 		}
 
 
@@ -95,7 +95,7 @@ class DAOSuspenderBoletin {
 			$consulta->execute();
 
 		} catch( PDOExecption $e ){
-        	echo "=======  Error!: " . $e->getMessage() . "<br/>"; 
+        	error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
 		}
 
 		$conexion = null;
@@ -118,7 +118,7 @@ class DAOSuspenderBoletin {
 			$consulta->execute();
 
 		} catch( PDOExecption $e ){
-			echo "=======  Error!: " . $e->getMessage() . "<br/>";
+			error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
 		}
 	}
 
@@ -139,7 +139,7 @@ class DAOSuspenderBoletin {
 			$consulta->execute();
 
 		} catch( PDOExecption $e ){
-			echo "=======  Error!: " . $e->getMessage() . "<br/>";
+			error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
 		}
 	}
 }

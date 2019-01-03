@@ -91,7 +91,7 @@ class DAORegistrarBoletin {
 			
 			$userUser->id = $conexion->lastInsertId() + 0;
 		} catch( PDOExecption $e ){
-        	echo "=======  Error!: " . $e->getMessage() . "<br/>"; 
+        	error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
 		}
 
 
@@ -123,8 +123,7 @@ class DAORegistrarBoletin {
 			$consulta->execute();
 
 		} catch( PDOExecption $e ){
-			//$conexion->rollback(); 
-        	echo "=======  Error!: " . $e->getMessage() . "<br/>"; 
+			error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
 		}
 
 		$conexion = null;
@@ -152,7 +151,7 @@ class DAORegistrarBoletin {
 			$consulta->execute();
 
 		} catch( PDOExecption $e ){
-        	echo "=======  Error!: " . $e->getMessage() . "<br/>"; 
+        	error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
 		}
 
 		$conexion = null;
@@ -181,8 +180,7 @@ class DAORegistrarBoletin {
 			$consulta->execute();
 
 		} catch( PDOExecption $e ){
-			//$conexion->rollback(); 
-        	echo "=======  Error!: " . $e->getMessage() . "<br/>"; 
+			error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
 		}
 
 		$conexion = null;
@@ -212,7 +210,7 @@ class DAORegistrarBoletin {
 			$consulta->execute();
 			
 		} catch( PDOExecption $e ){
-        	echo "=======  Error!: " . $e->getMessage() . "<br/>";
+        	error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
 		}
 
 
@@ -238,7 +236,7 @@ class DAORegistrarBoletin {
 			$consulta->execute();
 			$respuesta = true;
 		} catch( PDOExecption $e ){
-        	echo "=======  Error!: " . $e->getMessage() . "<br/>";
+        	error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
 			$respuesta = false;
 		}
 
@@ -265,7 +263,7 @@ class DAORegistrarBoletin {
 			$consulta->execute();
 			$respuesta = true;
 		} catch( PDOExecption $e ){
-        	echo "=======  Error!: " . $e->getMessage() . "<br/>";
+        	error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
 			$respuesta = false;
 		}
 
