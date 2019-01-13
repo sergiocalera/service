@@ -1,7 +1,7 @@
 <?php
 
-require_once '../bo/boRegistrarBoletin.php';
-require_once '../dao/daoRegistrarBoletin.php';
+require_once 'bo/boRegistrarBoletin.php';
+require_once 'dao/daoRegistrarBoletin.php';
 
 // $vUser = new UserUser();
 // $tipoRegistro = 'boletin';
@@ -28,9 +28,10 @@ function registrarBoletin( UserUser $user ){
 	$idBoletin = 3;
 
 	$user = DAORegistrarBoletin::buscarRegistro( $user, $idBoletin );
+	$respuesta = array( 'type' => 'success', 'info' => NULL );
 
 	if( $user->uuid == null ){
-		echo "serch ... no tenemos informacion podemos seguir registrando<br>";
+		error_log( "serch ... no tenemos informacion podemos seguir registrando<br>",0);
 
 		$user->confirmed = 1;
 		$user->blacklisted = 0;
@@ -45,9 +46,7 @@ function registrarBoletin( UserUser $user ){
 		$user->disabled = 0;
 
 		$user = DAORegistrarBoletin::insertarUserUser( $user );
-		var_dump( $user );
-		echo "<br><br>";
-
+		
 		$listUser = new ListUser();
 		$listUser->userid = $user->id;
 		$listUser->listid = $idBoletin;
@@ -64,7 +63,7 @@ function registrarBoletin( UserUser $user ){
 		$userUserAttribute = DAORegistrarBoletin::insertarUserUserAttribute( $userUserAttribute );
 
 	} elseif( $user->uuid != null && $user->blacklisted == 1 ){
-		echo "<h4 style='color : orange;'>serch ... tenemos a un usuario registrado y dado de baja</h4>";
+		error_log( "<h4 style='color : orange;'>serch ... tenemos a un usuario registrado y dado de baja</h4>", 0);
 
 		/*
 		-- Para volver a dar de alta debemos de cambiar los valores de user_user
@@ -104,11 +103,12 @@ function registrarBoletin( UserUser $user ){
 		}
 
 	}else{
-		echo "<h4 style='color : green;'>serch ... tenemos a un usuario registrado y activo</h4>";
-		var_dump($user);
+		error_log( "<h4 style='color : green;'>serch ... tenemos a un usuario registrado y activo</h4>", 0);
+		$respuesta['type'] = 'error';
+		$respuesta['info'] = 'El correo ya se encuentra registrado';
 	}
 
-	return $user;
+	return $respuesta;
 }
 
 
@@ -132,6 +132,7 @@ function eliminarBoletin( UserUser $user ){
 
 	/* Se dejara la opcion 3 como id por defecto de la lista de Boletin */
 	$idBoletin = 3;
+	$respuesta = array( 'type' => 'success', 'info' => NULL );
 	$user = DAOSuspenderBoletin::buscarRegistro( $user, $idBoletin );
 	if( $user->uuid != null ){
 		$user->confirmed = 0;
@@ -155,6 +156,8 @@ function eliminarBoletin( UserUser $user ){
 		$userBlackListData->data = 'Puesto en lista negra por solicitud web enviado por el usuario';
 		$userBlackListData = DAOSuspenderBoletin::agregarUserABlackListData( $userBlackListData );
 	}
+
+	return $respuesta;
 }
 
 

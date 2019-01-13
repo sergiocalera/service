@@ -1,11 +1,11 @@
 <?php
 
 require_once 'daoConexion.php';
-require_once '../dto/user_user.php';
-require_once '../dto/listUser.php';
-require_once '../dto/user_user_attribute.php';
-require_once '../dto/user_blacklist.php';
-require_once '../dto/user_blacklist_data.php';
+require_once 'dto/user_user.php';
+require_once 'dto/listUser.php';
+require_once 'dto/user_user_attribute.php';
+require_once 'dto/user_blacklist.php';
+require_once 'dto/user_blacklist_data.php';
 
 class DAORegistrarBoletin {
 
