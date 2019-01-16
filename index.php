@@ -10,10 +10,11 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 $respuesta = array();
 
 error_log("serch ... estamos en este archivo", 0);
+/*
 $_POST['email'] = 'prueba2@correo.com';
 $_POST['name'] = 'nombre de prueba 2';
 $_POST['portal'] = 'registrar';
-
+*/
 if( isset( $_POST['email'] ) && isset( $_POST['name'] ) && isset( $_POST['portal'] ) && $_POST['name'] != '' && $_POST['email'] != '' && $_POST['portal'] != '' ){
 
 	$userUser = new UserUser();
@@ -27,19 +28,16 @@ if( isset( $_POST['email'] ) && isset( $_POST['name'] ) && isset( $_POST['portal
 		}
 	}catch( Exception $e ){
 		error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
-		if( $respuesta != NULL && $respuesta['type'] != NULL ){
-			$respuesta['type'] = 'error';
-		}
-		if( $respuesta != NULL && $respuesta['info'] != NULL ){
-			$respuesta['info'] = 'Por el momento';
+		if( $_POST['portal'] == 'registrar' ){
+			$respuesta = array( 'type' => 'error' , 'info' => 'Por el momento no contamos con sistema de registro' );
+		} else if( $_POST['portal'] == 'baja' ){
+			$respuesta = array( 'type' => 'error' , 'info' => 'Por el momento no contamos con sistema para dar de baja' );
+		} else{
+			$respuesta = array( 'type' => 'error' , 'info' => 'Por el momento no contamos con sistema' );
 		}
 	}
 
-	// var_dump($respuesta);echo '<br/><br/>';
 	$respuesta = array( 'state' => $respuesta );
-	// var_dump($respuesta);echo '<br/><br/>';
-	// $respuesta = obtenerDatos( $_POST['name'], $_POST['email'], $_POST['portal'] );
-	error_log('serch ... de todos modos pasamos por obtenerDatos', 0);
 }
 elseif ( !isset( $_POST['email'] ) || $_POST['email'] == '' ) {
  	$respuesta = array( 'state' => array( 'type' => 'error', 'info' => 'El correo es un dato requerido' ) );
@@ -49,6 +47,5 @@ elseif ( !isset( $_POST['name'] ) || $_POST['name'] == '' ) {
  } elseif( !isset( $_POST['portal'] ) || $_POST['portal'] == '' ){
  	$respuesta = array( 'state' => array( 'type' => 'error', 'info' => 'El portal es un dato requerido' ) );
  }
-//$respuesta = array( "correo" => "sol@correo.com" );
 echo json_encode($respuesta);
  ?>
