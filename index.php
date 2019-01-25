@@ -9,7 +9,7 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 $respuesta = array();
 
-error_log("serch ... estamos en este archivo", 0);
+error_log("serch ... aun estamos en este archivo", 0);
 /*
 $_POST['email'] = 'prueba2@correo.com';
 $_POST['name'] = 'nombre de prueba 2';

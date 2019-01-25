@@ -113,7 +113,7 @@ function registrarBoletin( UserUser $user ){
 
 
 function eliminarBoletin( UserUser $user ){
-	require_once '../dao/daoSuspenderBoletin.php';
+	require_once 'dao/daoSuspenderBoletin.php';
 	/*
 	-- Para dar de baja se debe de poner el user como
 	-- confirmed = 0
