@@ -3,25 +3,6 @@
 require_once 'bo/boRegistrarBoletin.php';
 require_once 'dao/daoRegistrarBoletin.php';
 
-// $vUser = new UserUser();
-// $tipoRegistro = 'boletin';
-// //$vUser->email = 'sergio.calera@gmail.com';
-// $vUser->nombre = 'Sergio Asurin Calera';
-// $vUser->email = 'fulanito2.calera@gmail.com';
-
-
-// echo "Vamos a probar buscando a {$vUser->nombre} - {$vUser->email}<br>";
-
-// if( $tipoRegistro === 'boletin' ){
-// 	echo "algo se debe de hacer por ser un boletin<br>";
-// 	//$vUser = registrarBoletin( $vUser );
-// 	$vUser = eliminarBoletin( $vUser );
-// 	//echo "obtenemos al objeto de user con info del registro: <br>";
-// 	//var_dump( $vUser );
-
-// }
-
-
 function registrarBoletin( UserUser $user ){
 
 	/* Se dejara la opcion 3 como id por defecto de la lista de Boletin */
@@ -31,7 +12,6 @@ function registrarBoletin( UserUser $user ){
 	$respuesta = array( 'type' => 'success', 'info' => NULL );
 
 	if( $user->uuid == null ){
-		error_log( "serch ... no tenemos informacion podemos seguir registrando<br>",0);
 
 		$user->confirmed = 1;
 		$user->blacklisted = 0;
@@ -63,8 +43,6 @@ function registrarBoletin( UserUser $user ){
 		$userUserAttribute = DAORegistrarBoletin::insertarUserUserAttribute( $userUserAttribute );
 
 	} elseif( $user->uuid != null && $user->blacklisted == 1 ){
-		error_log( "<h4 style='color : orange;'>serch ... tenemos a un usuario registrado y dado de baja</h4>", 0);
-
 		/*
 		-- Para volver a dar de alta debemos de cambiar los valores de user_user
 		-- confirmed = 1
@@ -103,7 +81,6 @@ function registrarBoletin( UserUser $user ){
 		}
 
 	}else{
-		error_log( "<h4 style='color : green;'>serch ... tenemos a un usuario registrado y activo</h4>", 0);
 		$respuesta['type'] = 'error';
 		$respuesta['info'] = 'El correo ya se encuentra registrado';
 	}

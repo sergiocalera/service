@@ -1,5 +1,4 @@
 <?php 
-//include_once "funciones.php";
 require_once "bsd/bsdRegistroBoletin.php";
 
 
@@ -9,12 +8,7 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 $respuesta = array();
 
-error_log("serch ... aun estamos en este archivo", 0);
-/*
-$_POST['email'] = 'prueba2@correo.com';
-$_POST['name'] = 'nombre de prueba 2';
-$_POST['portal'] = 'registrar';
-*/
+
 if( isset( $_POST['email'] ) && isset( $_POST['name'] ) && isset( $_POST['portal'] ) && $_POST['name'] != '' && $_POST['email'] != '' && $_POST['portal'] != '' ){
 
 	$userUser = new UserUser();
@@ -28,6 +22,7 @@ if( isset( $_POST['email'] ) && isset( $_POST['name'] ) && isset( $_POST['portal
 		}
 	}catch( Exception $e ){
 		error_log( '[File: ' . $e->getFile() . '] [Line: ' . $e->getLine() . '] [Detalle: ' . $e->getMessage() . ' ]', 0 );
+
 		if( $_POST['portal'] == 'registrar' ){
 			$respuesta = array( 'type' => 'error' , 'info' => 'Por el momento no contamos con sistema de registro' );
 		} else if( $_POST['portal'] == 'baja' ){

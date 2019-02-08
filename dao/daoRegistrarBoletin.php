@@ -18,13 +18,9 @@ class DAORegistrarBoletin {
 
 		$conexion = new Conexion();
 
-		// $consulta = $conexion->prepare("SELECT A.id, A.email, A.confirmed, A.blacklisted, A.optedin, A.bouncecount, A.entered, A.modified, A.uniqid, A.uuid, A.htmlemail, A.subscribepage, A.disabled FROM phplist_user_user AS A INNER JOIN phplist_listuser AS B ON A.id = B.userid INNER JOIN phplist_user_user_attribute AS C ON A.id = C.userid AND C.attributeid = 1 WHERE B.listid = :tipoLista AND A.email = :email");
-
 		$consulta = $conexion->prepare("SELECT A.id, A.email, A.confirmed, A.blacklisted, A.optedin, A.bouncecount, A.entered, A.modified, A.uniqid, A.uuid, A.htmlemail, A.subscribepage, A.disabled FROM phplist_user_user AS A INNER JOIN phplist_user_user_attribute AS B ON A.id = B.userid AND B.attributeid = 1 WHERE A.email = :email");
 
-		//$consulta->bindParam( ':tipoLista', $tipoLista, PDO::PARAM_INT );
 		$consulta->bindParam( ':email', $strEmail, PDO::PARAM_STR );
-		//$consulta->bindParam( ':email', $strVariable, PDO::PARAM_STR );
 
 		$consulta->execute();
 
